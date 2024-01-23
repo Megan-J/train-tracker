@@ -1,16 +1,20 @@
 import requests
 import json
-from datetime import datetime, timezone
+from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 stop_parameters = {
-    "api_key": '',
+    "api_key": os.environ['API_KEY'],
     "operator_id" : 'SC',
     "stop_id": '62943',
     "format": 'json'
 }
 
 parameters = {
-    "api_key": '',
+    "api_key": os.environ['API_KEY'],
     "agency" : 'SC',
     "stopcode": '62943',
     "format": 'json'
