@@ -30,15 +30,17 @@ response = requests.get('http://api.511.org/transit/StopMonitoring', params=para
 #print(response.status_code)
 
 stop_content = stops.content.decode('utf-8-sig')
+# converting JSON string to Python Dict
 stop_data = json.loads(stop_content)
-stop_json_format = json.dumps(stop_data, indent=4)  
+
+# understanding info in json file
+# stop_json_format = json.dumps(stop_data, indent=4) 
 
 
 stop_id = stop_data['Siri']['ServiceDelivery']['DataObjectDelivery']['dataObjects']['SiteFrame']['stopPlaces']['StopPlace']['@id']
 stop_name = stop_data['Siri']['ServiceDelivery']['DataObjectDelivery']['dataObjects']['SiteFrame']['stopPlaces']['StopPlace']['Name']
 
 content = response.content.decode('utf-8-sig') 
-
 # converting JSON string to Python Dict
 data = json.loads(content)
 
@@ -65,3 +67,16 @@ print("Stop Id: ", stop_id)
 print("Stop Name: ", stop_name)
 print(aimed_arrival_times)
 print(expected_arrival_times)
+
+
+def soonest_bus():
+    if aimed_arrival_times:
+        wait_time = aimed_arrival_times[0] - datetime.now()
+        seconds = wait_time.total_seconds()
+        minutes = divmod(seconds, 60)[0]
+        print(minutes)
+        #return wait_time
+    else:
+        print("No more buses")
+        return "No more buses"
+
